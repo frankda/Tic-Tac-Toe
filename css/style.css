@@ -19,7 +19,7 @@
 .board {
     width: var(--board-width);
     height: var(--board-height);
-    background-color: greenyellow;
+    /* background-color: greenyellow; */
     display: flex;
     flex-wrap: wrap;
 }
