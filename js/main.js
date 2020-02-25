@@ -86,6 +86,6 @@ for (let i = 0; i < cells.length; i++) {
     cells[i].addEventListener('click', function () {
         cellClicking(this);
         cellFlip(this);
-        // this.removeEventListener('click', arguments.callee);
+        this.removeEventListener('click', arguments.callee);
     });
 };
