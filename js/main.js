@@ -78,14 +78,14 @@ const cellClicking = function (_this) {
 
 // Start
 for (let i = 0; i < cells.length; i++) {
-    // Define row and column for each cell
+    // Define cell's own row and column no.
     cells[i].row = Math.floor(i / 3);
     cells[i].column = i % 3;
 
-    // Bind onclick event to each cell
-    cells[i].addEventListener('click', function () {
+    // Add onclick event for each cell and unbind after clicked
+    cells[i].addEventListener('click', function cellOnClick () {
         cellClicking(this);
         cellFlip(this);
-        this.removeEventListener('click', arguments.callee);
+        this.removeEventListener('click', cellOnClick);
     });
 };
