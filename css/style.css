@@ -1,3 +1,12 @@
+:root {
+    --board-height: 60vh;
+    --board-width: 60vh; 
+    --board-dimension: 3;
+
+    --cell-width: calc(var(--board-width) / var(--board-dimension));
+    --cell-height: calc(var(--board-height) / var(--board-dimension));
+}
+
 .wrap {
     display: flex;
     width: 800px;
@@ -8,8 +17,55 @@
 }
 
 .board {
-    width: 60vh;
-    height: 60vh;
+    width: var(--board-width);
+    height: var(--board-height);
     background-color: greenyellow;
+    display: flex;
+    flex-wrap: wrap;
 }
 
+.cell {
+    background-color: rgb(209, 110, 110, 0.7);
+    height: var(--cell-height);
+    width: var(--cell-width);
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.circle {
+    width: calc(var(--cell-width) / 2);
+    height: calc(var(--cell-height) / 2);
+    border: 5px solid black;
+    border-radius: 50%;
+}
+
+.cross::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: calc(var(--cell-width) / 1.5);
+    height: 5px;
+    border-radius: 2rem;
+    background-color: black;
+    transform: rotate(-45deg);
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.cross::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: calc(var(--cell-width) / 1.5);
+    height: 5px;
+    border-radius: 2rem;
+    background-color: black;
+    transform: rotate(45deg);
+    left: 0;
+    right: 0;
+    margin: auto;
+}
