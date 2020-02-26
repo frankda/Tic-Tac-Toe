@@ -1,6 +1,6 @@
 :root {
-    --board-height: 60vh;
-    --board-width: 60vh; 
+    --board-height: 33vw;
+    --board-width: 33vw; 
     --board-dimension: 3;
 
     --cell-width: calc(var(--board-width) / var(--board-dimension));
@@ -9,6 +9,10 @@
 
 header {
     text-align: center;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 main {
@@ -17,6 +21,13 @@ main {
 }
 
 /* Control Panel */
+.control-panel {
+    width: 33vw;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
 .controler {
     display: flex;
     /* justify-content: space-evenly; */
@@ -26,9 +37,10 @@ main {
 .wrap {
     display: flex;
     height: 100vh;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex-direction: column;
+    width: 33vw;
 }
 
 .board {
@@ -41,7 +53,7 @@ main {
 }
 
 .reset-button {
-    margin-top: 1rem;
+    margin-top: 5vh;
     outline: 1px solid black;
     outline-offset: 3px;
     border: 1px solid white;
@@ -180,10 +192,15 @@ main {
 }
 
 /* Record Board */
-.record {
+.record-panel {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: stat;
+    align-items: center;
+    width: 33vw;
+}
+
+.record-panel > div {
     text-align: center;
 }
 
@@ -192,11 +209,11 @@ main {
     padding-top: 45px;
 }
 
-.record > div {
+.record-panel > div {
     width: 300px;
     height: 150px;
 }
 
-.record > div > p {
+.record-panel > div > p {
     margin-top: 30px;
 }
