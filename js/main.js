@@ -12,6 +12,13 @@ const winConditionStorage = function (shape, inputBoardDimensions) {
     shape.negDiag = 0;
 };
 
+const resetBoard = function () {
+    const cellsToBeRemoved = document.querySelectorAll('.cell');
+    for (let i = 0; i < cellsToBeRemoved.length; i++) {
+        cellsToBeRemoved[i].remove();
+    };
+};
+
 const cellFlip = function (_this,) {
     if (!gameover) {
         const div = document.createElement('div');
@@ -26,8 +33,6 @@ const cellFlip = function (_this,) {
 };
 
 const checkRow = function (side, _this) {
-    console.log(inputBoardDimensions);
-    
     side.row[_this.row] += 1;
     for (let i = 0; i < Object.keys(side.row).length; i++) {
         if (side.row[i] === inputBoardDimensions) {
@@ -61,8 +66,6 @@ const checkDiag = function (side, _this) {
 };
 
 const cellClicking = function (_this) {
-    console.log(inputBoardDimensions);
-    
     if (!gameover) {
         cellFlip(_this);
         count += 1;
@@ -103,6 +106,8 @@ let root = document.documentElement;
 
 inputBoardDimensions = 3;
 
+
+
 const main = function (inputBoardDimensions) {
     createCell(inputBoardDimensions);
     winConditionStorage(circle, inputBoardDimensions);
@@ -121,4 +126,11 @@ const main = function (inputBoardDimensions) {
     };
 };
 
-main(inputBoardDimensions);
+const boardDimension = document.querySelector('#board-dimension');
+boardDimension.addEventListener('input', function(){
+    resetBoard();
+    inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
+    main(inputBoardDimensions);
+});
+
+// main(3);
