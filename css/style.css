@@ -17,9 +17,10 @@
 .board {
     width: var(--board-width);
     height: var(--board-height);
-    /* background-color: greenyellow; */
     display: flex;
     flex-wrap: wrap;
+    box-sizing: content-box;
+    border: 1px solid black;
 }
 
 .cell {

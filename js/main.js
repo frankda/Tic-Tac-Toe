@@ -1,25 +1,16 @@
-const circle = {
-    row: {0: 0, 1: 0, 2: 0},
-    column: {0: 0, 1: 0, 2: 0},
-    posDiag: 0,
-    negDiag: 0
+const circle = {};
+const cross = {};
+
+const winConditionStorage = function (shape, inputBoardDimensions) {
+    shape.row = {};
+    shape.column = {};
+    for (let i = 0; i < inputBoardDimensions; i++) {
+        shape.row[i] = 0;
+        shape.column[i] = 0;
+    };
+    shape.posDiag = 0;
+    shape.negDiag = 0;
 };
-
-const cross = {
-    row: {0: 0, 1: 0, 2: 0},
-    column: {0: 0, 1: 0, 2: 0},
-    posDiag: 0,
-    negDiag: 0
-};
-
-// const winConditionStorage = function (shape, inputBoardDimensions) {
-//     for (let i = 0; i < inputBoardDimensions; i++) {
-//         shape.row.i = 0;
-//         shape.column.i = 0;
-//         shape.posDiag = 0;
-
-//     }
-// };
 
 const cellFlip = function (_this,) {
     if (!gameover) {
@@ -35,9 +26,11 @@ const cellFlip = function (_this,) {
 };
 
 const checkRow = function (side, _this) {
+    console.log(inputBoardDimensions);
+    
     side.row[_this.row] += 1;
     for (let i = 0; i < Object.keys(side.row).length; i++) {
-        if (side.row[i] === 3) {    // 3 could be changed to variables if needed
+        if (side.row[i] === inputBoardDimensions) {
             console.log(`win`);
             gameover = true;
         };
@@ -47,7 +40,7 @@ const checkRow = function (side, _this) {
 const checkColumn = function (side, _this) {
     side.column[_this.column] += 1;
     for (let i = 0; i < Object.keys(side.column).length; i++) {
-        if (side.column[i] === 3) {    // 3 could be changed to variables if needed
+        if (side.column[i] === inputBoardDimensions) {    // 3 could be changed to variables if needed
             console.log(`win`);
             gameover = true;
         };
@@ -58,16 +51,18 @@ const checkDiag = function (side, _this) {
     if (_this.row === _this.column) {
         side.posDiag += 1;
     };
-    if ((_this.row + _this.column) === 2) {
+    if ((_this.row + _this.column) === (inputBoardDimensions - 1)) {
         side.negDiag += 1;
     };
-    if (side.posDiag === 3 || side.negDiag === 3) {
+    if (side.posDiag === inputBoardDimensions || side.negDiag === inputBoardDimensions) {
         console.log('win'); 
         gameover = true;
     };
 };
 
 const cellClicking = function (_this) {
+    console.log(inputBoardDimensions);
+    
     if (!gameover) {
         cellFlip(_this);
         count += 1;
@@ -81,7 +76,7 @@ const cellClicking = function (_this) {
             checkColumn(cross, _this);
             checkDiag(cross, _this);
         };
-        if (count === 9) {
+        if (count === (inputBoardDimensions * inputBoardDimensions)) {
             console.log('draw'); 
             gameover = true;
         };
@@ -100,29 +95,30 @@ const createCell = function (inputBoardDimensions) {
 };
 
 // Variables declaration
-const inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
-boardDimension = 3;
+let inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
 let circleFirst = true;
 let gameover = false;
 let count = 0;
 let root = document.documentElement;
 
+inputBoardDimensions = 3;
 
+const main = function (inputBoardDimensions) {
+    createCell(inputBoardDimensions);
+    winConditionStorage(circle, inputBoardDimensions);
+    winConditionStorage(cross, inputBoardDimensions);
+    const cells = document.querySelectorAll('.cell');
+    for (let i = 0; i < cells.length; i++) {
+        // Define cell's own row and column no.
+        cells[i].row = Math.floor(i / inputBoardDimensions);
+        cells[i].column = i % inputBoardDimensions;
 
-createCell(3);
-const cells = document.querySelectorAll('.cell');
-
-// Start
-
-for (let i = 0; i < cells.length; i++) {
-    // Define cell's own row and column no.
-    cells[i].row = Math.floor(i / 3);
-    cells[i].column = i % 3;
-
-    // Add onclick event for each cell and unbind after clicked
-    cells[i].addEventListener('click', function cellOnClick () {
-        cellClicking(this);
-        this.removeEventListener('click', cellOnClick);
-    });
+        // Add onclick event for each cell and unbind after clicked
+        cells[i].addEventListener('click', function cellOnClick () {
+            cellClicking(this);
+            this.removeEventListener('click', cellOnClick);
+        });
+    };
 };
 
+main(inputBoardDimensions);
