@@ -17,6 +17,21 @@ const resetBoard = function () {
     for (let i = 0; i < cellsToBeRemoved.length; i++) {
         cellsToBeRemoved[i].remove();
     };
+    gameover = false;
+    count = 0;
+    circleFirst = true;
+};
+
+const getScore =function () {
+    if (circleFirst) {
+        oScore += 1;
+        const circleMessage = document.querySelector('.player-o p');
+        circleMessage.textContent = oScore;
+    } else {
+        xScore += 1;
+        const crossMessage = document.querySelector('.player-x p');
+        crossMessage.textContent = xScore;
+    };
 };
 
 const cellFlip = function (_this,) {
@@ -33,10 +48,12 @@ const cellFlip = function (_this,) {
 };
 
 const checkRow = function (side, _this) {
+    console.log(circle);
+    
     side.row[_this.row] += 1;
     for (let i = 0; i < Object.keys(side.row).length; i++) {
         if (side.row[i] === inputBoardDimensions) {
-            console.log(`win`);
+            getScore();
             gameover = true;
         };
     };
@@ -46,7 +63,7 @@ const checkColumn = function (side, _this) {
     side.column[_this.column] += 1;
     for (let i = 0; i < Object.keys(side.column).length; i++) {
         if (side.column[i] === inputBoardDimensions) {    // 3 could be changed to variables if needed
-            console.log(`win`);
+            getScore();
             gameover = true;
         };
     };
@@ -60,7 +77,7 @@ const checkDiag = function (side, _this) {
         side.negDiag += 1;
     };
     if (side.posDiag === inputBoardDimensions || side.negDiag === inputBoardDimensions) {
-        console.log('win'); 
+        getScore();
         gameover = true;
     };
 };
@@ -97,16 +114,19 @@ const createCell = function (inputBoardDimensions) {
     };
 };
 
+const playClickSound = function () {
+    sound.play();
+};
+
 // Variables declaration
 let inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
 let circleFirst = true;
 let gameover = false;
 let count = 0;
 let root = document.documentElement;
-
-inputBoardDimensions = 3;
-
-
+let oScore = 0;
+let xScore = 0;
+const sound = document.querySelector('#click');
 
 const main = function (inputBoardDimensions) {
     createCell(inputBoardDimensions);
@@ -121,16 +141,26 @@ const main = function (inputBoardDimensions) {
         // Add onclick event for each cell and unbind after clicked
         cells[i].addEventListener('click', function cellOnClick () {
             cellClicking(this);
+            playClickSound();
             this.removeEventListener('click', cellOnClick);
         });
     };
 };
 
-const boardDimension = document.querySelector('#board-dimension');
-boardDimension.addEventListener('input', function(){
+main(inputBoardDimensions);
+
+const boardDimensionInput = document.querySelector('#board-dimension');
+boardDimensionInput.addEventListener('input', function(){
     resetBoard();
     inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
     main(inputBoardDimensions);
 });
 
-// main(3);
+const resetbutton = document.querySelector('.reset-button');
+resetbutton.addEventListener('click', function(){
+    winConditionStorage(circle, inputBoardDimensions);
+    winConditionStorage(cross, inputBoardDimensions);
+    resetBoard();
+    inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
+    main(inputBoardDimensions);
+});

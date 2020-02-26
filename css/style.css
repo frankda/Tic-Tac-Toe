@@ -7,11 +7,28 @@
     --cell-height: calc(var(--board-height) / var(--board-dimension));
 }
 
+header {
+    text-align: center;
+}
+
+main {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/* Control Panel */
+.controler {
+    display: flex;
+    /* justify-content: space-evenly; */
+}
+
+/* Gaming Board */
 .wrap {
     display: flex;
     height: 100vh;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .board {
@@ -21,6 +38,27 @@
     flex-wrap: wrap;
     box-sizing: content-box;
     border: 1px solid black;
+}
+
+.reset-button {
+    margin-top: 1rem;
+    outline: 1px solid black;
+    outline-offset: 3px;
+    border: 1px solid white;
+    height: 50px;
+    width: 100px;
+}
+
+.reset-button:hover {
+    border: 3px solid black;
+}
+
+.reset-button:active {
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    outline: 1px solid black;
+    outline-offset: 3px;
 }
 
 .cell {
@@ -139,4 +177,26 @@
         width: calc(var(--cell-width) / 1.5);
         height: 5px;
     }
+}
+
+/* Record Board */
+.record {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.player-x {
+    border-top: 1px solid grey;
+    padding-top: 45px;
+}
+
+.record > div {
+    width: 300px;
+    height: 150px;
+}
+
+.record > div > p {
+    margin-top: 30px;
 }
