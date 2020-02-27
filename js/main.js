@@ -119,16 +119,24 @@ const cellClicking = function (_this) {
     };
 };
 
+// This function can be optimized: only if table size changed run this function
 const createGamingBoard = function () {
-    // Create gaming board
-    const insertBeforeThisElement = document.querySelector('audio');
-    root.style.setProperty('--board-height', inputBoardSize);
+    // Remove previous gaming board
+    const previousBoard = document.querySelector('.board');
+    if (previousBoard) {
+        previousBoard.remove();
+    };
+
+    // Create new gaming board
+    root.style.setProperty('--board-height', inputBoardSize + 'vw');
+    const wrap = document.querySelector('.wrap');
     const gamingBoardNode = document.createElement('div');
-    gamingBoardNode.setAttribute('class', 'board');
+    gamingBoardNode.setAttribute('class', 'board')
+    const insertBeforeThisElement = document.querySelector('audio');
     wrap.insertBefore(gamingBoardNode, insertBeforeThisElement);
 };
 
-const createCell = function (inputBoardDimensions) {
+const createCell = function () {
     const board = document.querySelector('.board');
 
     // Create gaming cells inside gaming board
@@ -156,7 +164,8 @@ const sound = document.querySelector('#click');
 
 // Generate gaming board and bind gaming logics on it
 const main = function (inputBoardDimensions) {
-    createCell(inputBoardDimensions);
+    createGamingBoard();
+    createCell();
     winConditionStorage(circle, inputBoardDimensions);
     winConditionStorage(cross, inputBoardDimensions);
     const cells = document.querySelectorAll('.cell');
@@ -174,18 +183,19 @@ const main = function (inputBoardDimensions) {
     };
 };
 
-// Bind function to input so slide input and text input can match each other
+// Bind function to change gmaing board style
 for (let i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener('input', function inputChange () {
         resetBoard();
-        matchSliderValueWithInputText(this);
+        matchSliderValueWithInputText(this);    // Bind function to input so slide input and text input can match each other
         inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
-        main(inputBoardDimensions);
+        inputBoardSize = parseInt(document.querySelector('#board-size').value);
+        main();
     });
 };
 
 // Default gaming board
-main(inputBoardDimensions);
+main();
 
 const resetbutton = document.querySelector('.reset-button');
 resetbutton.addEventListener('click', function(){
@@ -193,5 +203,5 @@ resetbutton.addEventListener('click', function(){
     winConditionStorage(cross, inputBoardDimensions);
     resetBoard();
     inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
-    main(inputBoardDimensions);
+    main();
 });
