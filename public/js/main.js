@@ -130,7 +130,7 @@ const cellClicking = function (_this) {
             checkColumn(cross, _this);
             checkDiag(cross, _this);
         };
-        if (count === (inputBoardDimensions * inputBoardDimensions)) {
+        if (count === (inputBoardDimensions * inputBoardDimensions) && !gameover) {
             querySetAnimation('.board', 'disappear');
             querySetAnimation('header h1', 'flyup');
             querySetAnimation('.draw', 'dropdown');
