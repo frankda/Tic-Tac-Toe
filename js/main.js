@@ -190,12 +190,12 @@ for (let i = 0; i < inputs.length; i++) {
         matchSliderValueWithInputText(this);    // Bind function to input so slide input and text input can match each other
         inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
         inputBoardSize = parseInt(document.querySelector('#board-size').value);
-        main();
+        main(inputBoardDimensions);
     });
 };
 
 // Default gaming board
-main();
+main(inputBoardDimensions);
 
 const resetbutton = document.querySelector('.reset-button');
 resetbutton.addEventListener('click', function(){
@@ -203,5 +203,5 @@ resetbutton.addEventListener('click', function(){
     winConditionStorage(cross, inputBoardDimensions);
     resetBoard();
     inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
-    main();
+    main(inputBoardDimensions);
 });
