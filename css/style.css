@@ -1,6 +1,6 @@
 :root {
     --board-height: 33vw;
-    --board-width: 33vw; 
+    --board-width: var(--board-height); 
     --board-dimension: 3;
 
     --cell-width: calc(var(--board-width) / var(--board-dimension));
@@ -24,13 +24,15 @@ main {
 .control-panel {
     width: 33vw;
     display: flex;
-    justify-content: center;
-    align-items: start;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
 }
 
 .controler {
     display: flex;
     flex-direction: column;
+    margin-bottom: 10vh;
 }
 
 .input-box {
@@ -112,7 +114,6 @@ main {
 }
 
 .cell {
-    /* background-color: rgb(209, 110, 110, 0.7); */
     height: var(--cell-height);
     width: var(--cell-width);
     border: 1px solid black;
