@@ -1,6 +1,19 @@
 const circle = {};
 const cross = {};
 
+const matchSliderValueWithInputText = function () {
+    if (this.className === 'input-box') {
+        const inputTextValue = parseInt(this.value);
+        const slidebar = this.nextSibling.nextSibling;
+        slidebar.value = inputTextValue;
+        
+    } else {
+        const slidebarValue = parseInt(this.value);
+        const inputText = this.previousSibling.previousSibling;
+        inputText.value = slidebarValue;
+    };
+};
+
 const winConditionStorage = function (shape, inputBoardDimensions) {
     shape.row = {};
     shape.column = {};
@@ -126,8 +139,10 @@ let count = 0;
 let root = document.documentElement;
 let oScore = 0;
 let xScore = 0;
+let inputs = document.querySelectorAll('.controler input');
 const sound = document.querySelector('#click');
 
+// Generate gaming board and bind gaming logics on it
 const main = function (inputBoardDimensions) {
     createCell(inputBoardDimensions);
     winConditionStorage(circle, inputBoardDimensions);
@@ -147,7 +162,12 @@ const main = function (inputBoardDimensions) {
     };
 };
 
-// Defaul
+// Bind function to input so slide input and text input can match each other
+for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener('input', matchSliderValueWithInputText);
+};
+
+// Default gaming board
 main(inputBoardDimensions);
 
 const boardDimensionInput = document.querySelector('#board-dimension');
