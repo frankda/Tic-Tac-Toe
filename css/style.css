@@ -30,7 +30,45 @@ main {
 
 .controler {
     display: flex;
-    /* justify-content: space-evenly; */
+    flex-direction: column;
+}
+
+.input-box {
+    margin-top: 1rem;
+    text-align: center;
+    border: none;
+    height: 2rem;
+}
+
+/* -webkit-appearance is not standard */
+.slider {
+    margin-top: 1rem;
+    -webkit-appearance: none;
+    height: 1px;
+    background-color: black;
+    border-radius: 5px;
+}
+
+/* ::-moz-range-thumb is not standard. but what is standard */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: black;
 }
 
 /* Gaming Board */

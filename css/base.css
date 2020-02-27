@@ -7,4 +7,9 @@
     text-decoration: none;
     outline: none;
     font-family: Arial, Helvetica, sans-serif;
+    display: block;
+}
+
+p {
+    text-align: center;
 }

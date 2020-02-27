@@ -147,6 +147,7 @@ const main = function (inputBoardDimensions) {
     };
 };
 
+// Defaul
 main(inputBoardDimensions);
 
 const boardDimensionInput = document.querySelector('#board-dimension');
