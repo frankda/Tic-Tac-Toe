@@ -1,15 +1,15 @@
 const circle = {};
 const cross = {};
 
-const matchSliderValueWithInputText = function () {
-    if (this.className === 'input-box') {
-        const inputTextValue = parseInt(this.value);
-        const slidebar = this.nextSibling.nextSibling;
+const matchSliderValueWithInputText = function (_this) {
+    if (_this.className === 'input-box') {
+        const inputTextValue = parseInt(_this.value);
+        const slidebar = _this.nextSibling.nextSibling;
         slidebar.value = inputTextValue;
         
     } else {
-        const slidebarValue = parseInt(this.value);
-        const inputText = this.previousSibling.previousSibling;
+        const slidebarValue = parseInt(_this.value);
+        const inputText = _this.previousSibling.previousSibling;
         inputText.value = slidebarValue;
     };
 };
@@ -119,11 +119,22 @@ const cellClicking = function (_this) {
     };
 };
 
+const createGamingBoard = function () {
+    // Create gaming board
+    const insertBeforeThisElement = document.querySelector('audio');
+    root.style.setProperty('--board-height', inputBoardSize);
+    const gamingBoardNode = document.createElement('div');
+    gamingBoardNode.setAttribute('class', 'board');
+    wrap.insertBefore(gamingBoardNode, insertBeforeThisElement);
+};
+
 const createCell = function (inputBoardDimensions) {
+    const board = document.querySelector('.board');
+
+    // Create gaming cells inside gaming board
     root.style.setProperty('--board-dimension', inputBoardDimensions);
-    const wrap = document.querySelector('.board');
     for (let i = 0; i < inputBoardDimensions * inputBoardDimensions; i++) {
-        wrap.innerHTML += '<div class="cell"></div>'
+        board.innerHTML += '<div class="cell"></div>'
     };
 };
 
@@ -133,6 +144,7 @@ const playClickSound = function () {
 
 // Variables declaration
 let inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
+let inputBoardSize = parseInt(document.querySelector('#board-size').value);
 let circleFirst = true;
 let gameover = false;
 let count = 0;
@@ -164,18 +176,16 @@ const main = function (inputBoardDimensions) {
 
 // Bind function to input so slide input and text input can match each other
 for (let i = 0; i < inputs.length; i++) {
-    inputs[i].addEventListener('input', matchSliderValueWithInputText);
+    inputs[i].addEventListener('input', function inputChange () {
+        resetBoard();
+        matchSliderValueWithInputText(this);
+        inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
+        main(inputBoardDimensions);
+    });
 };
 
 // Default gaming board
 main(inputBoardDimensions);
-
-const boardDimensionInput = document.querySelector('#board-dimension');
-boardDimensionInput.addEventListener('input', function(){
-    resetBoard();
-    inputBoardDimensions = parseInt(document.querySelector('#board-dimension').value);
-    main(inputBoardDimensions);
-});
 
 const resetbutton = document.querySelector('.reset-button');
 resetbutton.addEventListener('click', function(){
