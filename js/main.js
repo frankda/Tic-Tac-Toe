@@ -1,6 +1,13 @@
 const circle = {};
 const cross = {};
 
+const querySetAnimation = function (nodeName, animationName) {
+    const node = document.querySelectorAll(nodeName);
+    for (let i = 0; i < node.length; i++) {
+        node[i].className = node[i].className + ' ' + animationName;
+    };
+};
+
 const matchSliderValueWithInputText = function (_this) {
     if (_this.className === 'input-box') {
         const inputTextValue = parseInt(_this.value);
@@ -30,6 +37,9 @@ const resetBoard = function () {
     for (let i = 0; i < cellsToBeRemoved.length; i++) {
         cellsToBeRemoved[i].remove();
     };
+    querySetAnimation('header h1', 'flyback');
+    querySetAnimation('.hidetop', 'dropback');
+
     gameover = false;
     count = 0;
     circleFirst = true;
@@ -40,10 +50,12 @@ const getScore =function () {
         oScore += 1;
         const circleMessage = document.querySelector('.player-o p');
         circleMessage.textContent = oScore;
+        winner.textContent = 'O';
     } else {
         xScore += 1;
         const crossMessage = document.querySelector('.player-x p');
         crossMessage.textContent = xScore;
+        winner.textContent = 'X';
     };
 };
 
@@ -67,6 +79,9 @@ const checkRow = function (side, _this) {
     for (let i = 0; i < Object.keys(side.row).length; i++) {
         if (side.row[i] === inputBoardDimensions) {
             getScore();
+            querySetAnimation('.board', 'disappear');
+            querySetAnimation('header h1', 'flyup');
+            querySetAnimation('.winning', 'dropdown');
             gameover = true;
         };
     };
@@ -77,6 +92,9 @@ const checkColumn = function (side, _this) {
     for (let i = 0; i < Object.keys(side.column).length; i++) {
         if (side.column[i] === inputBoardDimensions) {    // 3 could be changed to variables if needed
             getScore();
+            querySetAnimation('.board', 'disappear');
+            querySetAnimation('header h1', 'flyup');
+            querySetAnimation('.winning', 'dropdown');
             gameover = true;
         };
     };
@@ -91,6 +109,9 @@ const checkDiag = function (side, _this) {
     };
     if (side.posDiag === inputBoardDimensions || side.negDiag === inputBoardDimensions) {
         getScore();
+        querySetAnimation('.board', 'disappear');
+        querySetAnimation('header h1', 'flyup');
+        querySetAnimation('.winning', 'dropdown');
         gameover = true;
     };
 };
@@ -110,6 +131,9 @@ const cellClicking = function (_this) {
             checkDiag(cross, _this);
         };
         if (count === (inputBoardDimensions * inputBoardDimensions)) {
+            querySetAnimation('.board', 'disappear');
+            querySetAnimation('header h1', 'flyup');
+            querySetAnimation('.draw', 'dropdown');
             console.log('draw'); 
             gameover = true;
         };
@@ -128,7 +152,7 @@ const createGamingBoard = function () {
     };
 
     // Create new gaming board
-    root.style.setProperty('--board-height', inputBoardSize + 'vw');
+    root.style.setProperty('--board-height', inputBoardSize + 'vh');
     const wrap = document.querySelector('.wrap');
     const gamingBoardNode = document.createElement('div');
     gamingBoardNode.setAttribute('class', 'board')
@@ -161,6 +185,7 @@ let oScore = 0;
 let xScore = 0;
 let inputs = document.querySelectorAll('.controler input');
 const sound = document.querySelector('#click');
+let winner = document.querySelector('.winner');
 
 // Generate gaming board and bind gaming logics on it
 const main = function (inputBoardDimensions) {
@@ -176,6 +201,9 @@ const main = function (inputBoardDimensions) {
 
         // Add onclick event for each cell and unbind after clicked
         cells[i].addEventListener('click', function cellOnClick () {
+            document.querySelector('header h1').className = '';         // Hard code to reset title location
+            document.querySelector('div.winning').className = 'hidetop winning';  
+            document.querySelector('div.draw').className = 'hidetop draw';  
             cellClicking(this);
             playClickSound();
             this.removeEventListener('click', cellOnClick);

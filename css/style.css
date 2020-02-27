@@ -144,8 +144,6 @@ main {
     content: "";
     display: block;
     position: absolute;
-    /* width: calc(var(--cell-width) / 1.5);
-    height: 5px; */
     border-radius: 2rem;
     background-color: black;
     transform: rotate(-45deg);
@@ -255,4 +253,17 @@ main {
 
 .record-panel > div > p {
     margin-top: 30px;
+}
+
+/* Hiden Elements */
+.hidetop {
+    text-align: center;
+    transform: translateY(-184px);
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.hidetop > p {
+    font-size: 80px;
 }

@@ -6,12 +6,24 @@
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animation.css">
 </head>
 <body>
+    <!-- Game conditions -->
+    <div class="hidetop winning">
+        <p>WINNER</p>
+        <p class="winner"></p>
+    </div>
+    <div class="hidetop draw">
+        <p>DRAW</p>
+    </div>
+
     <header>
-        <h1>TIC TAC TOE</h1>
+        <h1>TIC TAC TOE ??</h1>
     </header>
+
     <main>
+        <!-- Control panel -->
         <div class="control-panel">
             <div class="controler">
                 <p>TABLE DIMENSION</p>
@@ -19,12 +31,13 @@
                 <input type="range" class="slider" id="board-size-bar" min="2" max="15" step="1" value="3">
             </div>
             <div class="controler">
-                <p>TABLE SIZE (vw)</p>
+                <p>TABLE SIZE</p>
                 <input type="text" class="input-box" id="board-size" value="33">
                 <input type="range" class="slider" min="1" max="100" step="1" value="33">
             </div>
         </div>
 
+        <!-- Gaming board -->
         <div class="wrap">
             <!-- <div class="board">
             </div> -->
@@ -32,6 +45,7 @@
             <input type="button" value="RESET" class="reset-button">
         </div>
         
+        <!-- Record book -->
         <div class="record-panel">
             <div class="player-o">
                 <h2>O SCORE</h2>
