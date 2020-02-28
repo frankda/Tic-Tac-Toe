@@ -1,6 +1,9 @@
 # Tic Tac Toe
 A simple Tic Tac Toe game, you can only play yourself. Page layout is divided to 3 parts.
 
+*Live Code*
+https://frankda.github.io/tic-tac-toe/
+
 ## Main Game
 ### 1. Create Gaming Board
 Two functions are used to generate gaming board:
